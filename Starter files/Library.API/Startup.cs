@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.IO;
+using AutoMapper;
 using Library.API.Contexts;
 using Library.API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 namespace Library.API
 {
@@ -76,6 +80,20 @@ namespace Library.API
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddAutoMapper();
+
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("LibraryOpenAPISpecification",new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Library API",
+                    Version = "1"
+                });
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullePath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+                setupAction.IncludeXmlComments(xmlCommentsFullePath);
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +111,15 @@ namespace Library.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+                {
+                    setupAction.SwaggerEndpoint("swagger/LibraryOpenAPISpecification/swagger.json", "Library API");
+                    setupAction.RoutePrefix = "";
+                }
+                );
 
             app.UseStaticFiles();
 
