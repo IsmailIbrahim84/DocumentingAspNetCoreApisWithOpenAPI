@@ -4,5 +4,13 @@
         <name>Library.API</name>
     </assembly>
     <members>
+        <member name="M:Library.API.Controllers.BooksController.GetBooks(System.Guid)">
+            <summary>
+            Get a book by Author Id 
+            </summary>
+            <param name="authorId">The id of author.</param>
+            <returns>An action result of type book.</returns>
+            <response code="200">Returns the requested book</response>
+        </member>
     </members>
 </doc>
