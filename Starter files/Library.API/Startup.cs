@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 
 namespace Library.API
@@ -29,8 +30,11 @@ namespace Library.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(setupAction =>
-            {
+                {
 
+                    setupAction.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status400BadRequest));
+                    setupAction.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status406NotAcceptable));
+                    setupAction.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
 
                 setupAction.ReturnHttpNotAcceptable = true;
 
