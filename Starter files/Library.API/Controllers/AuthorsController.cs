@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Library.API.Controllers
 {
 
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("api/authors")]
     [ApiController]
     public class AuthorsController : ControllerBase
@@ -25,6 +29,7 @@ namespace Library.API.Controllers
             _mapper = mapper;
         }
 
+        [Produces("application/json","application/xml")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {

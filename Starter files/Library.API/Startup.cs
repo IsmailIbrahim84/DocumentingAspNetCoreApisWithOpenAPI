@@ -38,6 +38,8 @@ namespace Library.API
 
                 setupAction.ReturnHttpNotAcceptable = true;
 
+                setupAction.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+
                 var jsonOutputFormatter = setupAction.OutputFormatters
                     .OfType<JsonOutputFormatter>().FirstOrDefault();
 
