@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Reflection;
+using Library.API.OperatorFilter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 
@@ -94,8 +95,12 @@ namespace Library.API
                     Title = "Library API",
                     Version = "1"
                 });
+
+                setupAction.OperationFilter<GetBookFilterationFilter>();
+
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullePath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
 
                 setupAction.IncludeXmlComments(xmlCommentsFullePath);
 
@@ -115,6 +120,8 @@ namespace Library.API
                 // You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            
 
             app.UseHttpsRedirection();
 

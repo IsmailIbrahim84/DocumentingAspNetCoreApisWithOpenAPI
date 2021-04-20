@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Library.API.Attributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace Library.API.Controllers
 {
@@ -48,6 +50,18 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<IEnumerable<Book>>(booksFromRepo));
         }
 
+
+       /// <summary>
+       /// Get the book by Book Id and Author Id.
+       /// </summary>
+       /// <param name="authorId">The Author Id.</param>
+       /// <param name="bookId">The book Id</param>
+       /// <returns>Ac action result type of book with Author first name and last name.</returns>
+       [ProducesResponseType(StatusCodes.Status404NotFound)]
+       [ProducesResponseType(StatusCodes.Status400BadRequest)]
+       [ProducesResponseType(StatusCodes.Status200OK)]
+       [Produces("application/json","application/xml")]
+       [RequestHeaderMatchesMediaType(HeaderNames.Accept,"application/json","application/vnd.marvin.book+json")]
         [HttpGet("{bookId}")]
         public async Task<ActionResult<Book>> GetBook(
             Guid authorId,
@@ -67,6 +81,37 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<Book>(bookFromRepo));
         }
 
+        
+
+       ///// <summary>
+       ///// Get the book by Book Id and Author Id.
+       ///// </summary>
+       ///// <param name="authorId">The Author Id.</param>
+       ///// <param name="bookId">The book Id</param>
+       ///// <returns>Ac action result type of book with author first name and last name concatenated as one Author name.</returns>
+       //[ProducesResponseType(StatusCodes.Status404NotFound)]
+       //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+       //[ProducesResponseType(StatusCodes.Status200OK)]
+       //[Produces("application/json","application/xml")]
+       //[RequestHeaderMatchesMediaType(HeaderNames.Accept,"application/json","application/vnd.marvin.bookwithconcatenatedname+json")]
+       //[HttpGet("{bookId}")]
+       //public async Task<ActionResult<BookWithConcatenatedAuthorName>> GetBookWithConcatenatedname(
+       //    Guid authorId,
+       //    Guid bookId)
+       //{
+       //    if (! await _authorRepository.AuthorExistsAsync(authorId))
+       //    {
+       //        return NotFound();
+       //    }
+
+       //    var bookFromRepo = await _bookRepository.GetBookAsync(authorId, bookId);
+       //    if (bookFromRepo == null)
+       //    {
+       //        return NotFound();
+       //    }
+
+       //    return Ok(_mapper.Map<Book>(bookFromRepo));
+       //}
 
         [HttpPost()]
         public async Task<ActionResult<Book>> CreateBook(

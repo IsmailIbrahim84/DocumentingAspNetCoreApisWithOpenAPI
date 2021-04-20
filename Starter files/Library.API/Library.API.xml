@@ -12,5 +12,21 @@
             <returns>An action result of type book.</returns>
             <response code="200">Returns the requested book</response>
         </member>
+        <member name="M:Library.API.Controllers.BooksController.GetBook(System.Guid,System.Guid)">
+            <summary>
+            Get the book by Book Id and Author Id.
+            </summary>
+            <param name="authorId">The Author Id.</param>
+            <param name="bookId">The book Id</param>
+            <returns>Ac action result type of book with Author first name and last name.</returns>
+        </member>
+        <member name="M:Library.API.Controllers.BooksController.GetBookWithConcatenatedname(System.Guid,System.Guid)">
+            <summary>
+            Get the book by Book Id and Author Id.
+            </summary>
+            <param name="authorId">The Author Id.</param>
+            <param name="bookId">The book Id</param>
+            <returns>Ac action result type of book with author first name and last name concatenated as one Author name.</returns>
+        </member>
     </members>
 </doc>
