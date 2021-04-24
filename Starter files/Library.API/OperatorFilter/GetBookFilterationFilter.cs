@@ -24,6 +24,13 @@ namespace Library.API.OperatorFilter
         //       Schema = context.S
         //    });
         //}
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            if (operation.OperationId != "GetBook")
+            {
+                return;
 
+            }
+        }
     }
 }

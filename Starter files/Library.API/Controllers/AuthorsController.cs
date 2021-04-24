@@ -15,6 +15,7 @@ namespace Library.API.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [Route("api/authors")]
+
     [ApiController]
     public class AuthorsController : ControllerBase
     {
@@ -29,6 +30,7 @@ namespace Library.API.Controllers
             _mapper = mapper;
         }
 
+        [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationAuthors")]
         [Produces("application/json","application/xml")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
@@ -37,6 +39,7 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<IEnumerable<Author>>(authorsFromRepo));
         }
 
+        [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationAuthors")]
         [HttpGet("{authorId}")]
         public async Task<ActionResult<Author>> GetAuthor(
             Guid authorId)
@@ -50,6 +53,7 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<Author>(authorFromRepo));
         }
 
+        [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationAuthors")]
         [HttpPut("{authorId}")]
         public async Task<ActionResult<Author>> UpdateAuthor(
             Guid authorId,
@@ -70,7 +74,7 @@ namespace Library.API.Controllers
             // return the author
             return Ok(_mapper.Map<Author>(authorFromRepo)); 
         }
-
+        [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationAuthors")]
         [HttpPatch("{authorId}")]
         public async Task<ActionResult<Author>> UpdateAuthor(
             Guid authorId,

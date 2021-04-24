@@ -87,12 +87,31 @@ namespace Library.API
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddAutoMapper();
-
+            //Authors OpenAPI:
             services.AddSwaggerGen(setupAction =>
             {
-                setupAction.SwaggerDoc("LibraryOpenAPISpecification",new Microsoft.OpenApi.Models.OpenApiInfo()
+                setupAction.SwaggerDoc("LibraryOpenAPISpecificationAuthors",new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    Title = "Library API",
+                    Title = "Library Authors API",
+                    Version = "1"
+                });
+
+                setupAction.OperationFilter<GetBookFilterationFilter>();
+
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullePath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+
+                setupAction.IncludeXmlComments(xmlCommentsFullePath);
+
+            });
+
+            //Book APIs:
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("LibraryOpenAPISpecificationBooks",new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Library Books API",
                     Version = "1"
                 });
 
@@ -129,10 +148,11 @@ namespace Library.API
 
             app.UseSwaggerUI(setupAction =>
                 {
-                    setupAction.SwaggerEndpoint("swagger/LibraryOpenAPISpecification/swagger.json", "Library API");
+                    setupAction.SwaggerEndpoint("swagger/LibraryOpenAPISpecificationAuthors/swagger.json", "Library Authors API");
+                    setupAction.SwaggerEndpoint("swagger/LibraryOpenAPISpecificationBooks/swagger.json", "Library Books API");
                     setupAction.RoutePrefix = "";
                 }
-                );
+            );
 
             app.UseStaticFiles();
 

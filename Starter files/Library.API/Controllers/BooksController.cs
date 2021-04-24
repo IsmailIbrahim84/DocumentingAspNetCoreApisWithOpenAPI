@@ -12,6 +12,7 @@ using Microsoft.Net.Http.Headers;
 namespace Library.API.Controllers
 {
     [Route("api/authors/{authorId}/books")]
+
     [ApiController]
     public class BooksController : ControllerBase
     { 
@@ -37,6 +38,7 @@ namespace Library.API.Controllers
        [ProducesResponseType(StatusCodes.Status404NotFound)]
        [ProducesResponseType(StatusCodes.Status400BadRequest)]
        [ProducesResponseType(StatusCodes.Status200OK)]
+       [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationBooks")]
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks(
         Guid authorId )
@@ -62,6 +64,7 @@ namespace Library.API.Controllers
        [ProducesResponseType(StatusCodes.Status200OK)]
        [Produces("application/json","application/xml")]
        [RequestHeaderMatchesMediaType(HeaderNames.Accept,"application/json","application/vnd.marvin.book+json")]
+       [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationBooks")]
         [HttpGet("{bookId}")]
         public async Task<ActionResult<Book>> GetBook(
             Guid authorId,
@@ -113,6 +116,7 @@ namespace Library.API.Controllers
        //    return Ok(_mapper.Map<Book>(bookFromRepo));
        //}
 
+        [ApiExplorerSettings(GroupName = "LibraryOpenAPISpecificationBooks")]
         [HttpPost()]
         public async Task<ActionResult<Book>> CreateBook(
             Guid authorId,
